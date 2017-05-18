@@ -47,21 +47,17 @@ class TestUtilsMethods(unittest.TestCase):
         """
         uct_datetime = DateTime(
             datetime(
-                2010, 1, 1, hour=1, minute=1, second=1, microsecond=1235, tzinfo=tz.gettz('UTC')
+                2010, 1, 1, hour=1, minute=1, second=1, microsecond=123456, tzinfo=tz.gettz('UTC')
             )
         )
 
         jst_datetime = DateTime(
             datetime(
-                2010, 1, 1, 1, 1, 1, 1235, tzinfo=tz.gettz('Asia/Tokyo')
+                2010, 1, 1, 1, 1, 1, 123456, tzinfo=tz.gettz('Asia/Tokyo')
             )
         )
 
         self.assertNotEqual(uct_datetime, jst_datetime)
-
-        self.assertTrue(uct_datetime.timestamp() > jst_datetime.timestamp())
-
-        self.assertTrue(uct_datetime.timestamp_us > jst_datetime.timestamp_us())
 
         self.assertTrue(uct_datetime.timestamp(epoch=uct_datetime.get_datetime()) == 0)
 
@@ -71,20 +67,10 @@ class TestUtilsMethods(unittest.TestCase):
         )
 
         self.assertTrue(
-            (DateTime.from_timestamp_us(
-                uct_datetime.timestamp_us()).timestamp_us() == uct_datetime.timestamp_us())
+            (DateTime.from_microseconds(
+                uct_datetime.microseconds()).microseconds() == uct_datetime.microseconds())
         )
 
-
-    def test_timezone(self):
-        native_dt = datetime(2012, 1, 1)
-        uct_dt = native_dt.replace(tzinfo=tz.gettz('UCT'))
-        jst_dt = datetime(2012, 1, 1, tzinfo=tz.gettz('Asia/Tokyo'))
-
-        print native_dt
-        print uct_dt
-        print jst_dt
-        print jst_dt.astimezone(tz.gettz('UCT'))
 
 
     def tearDown(self):

@@ -71,55 +71,57 @@ class JSON(object):
 class DateTime(object):
     """
     DateTime class
+
+    * A millisecond is converted to 1000 microseconds.
+    * A minute is converted to 60 seconds.
+    * An hour is converted to 3600 seconds.
+    * A week is converted to 7 days.
+
     """
     __date_time = datetime.min
 
     @staticmethod
-    def uct(date_time):
+    def utc(date_time):
         """
-        Return a specifed datetime to UCT datetime
+        Return the datetime with tzinfo=UTC
+
+        Coordinated Universal Time (UTC)
         """
         if isinstance(date_time, datetime):
             if date_time.tzinfo:
-                return date_time.astimezone(tz.gettz("UCT"))
+                return date_time.astimezone(tz.gettz("UTC"))
             else:
-                return date_time.replace(tzinfo=tz.gettz("UCT"))
+                return date_time.replace(tzinfo=tz.gettz("UTC"))
         else:
             raise ValueError("parameter is not a datetime object.")
 
     def get_datetime(self):
+        """
+        Return the datetime has been set.
+        """
         return self.__date_time
 
     def timestamp(self, epoch=tz.EPOCH):
         """
-        取得timestamp, 秒为单位
+        The Unix epoch (or Unix time or POSIX time or Unix timestamp) is
+        the number of seconds that have elapsed since January 1, 1970 (midnight UTC/GMT),
+        not counting leap seconds (in ISO 8601: 1970-01-01T00:00:00Z)
         """
         return timedelta.total_seconds(
-            DateTime.uct(self.__date_time) - DateTime.uct(epoch))
+            DateTime.utc(self.__date_time) - DateTime.utc(epoch))
 
-    def timestamp_us(self, epoch=tz.EPOCH):
+    def microseconds(self, epoch=tz.EPOCH):
         """
-        取得timestamp, 微秒为单位
+        取得从EPOCH开始的微秒数(单位：μs)
         """
-        return self.timestamp(epoch) * 1000
+        return self.timestamp(epoch) * 1000000
 
-
-    def __init__(self, date_time, parserinfo=None, **kwargs):
+    def __init__(self, date_time=datetime.min):
         """
-        dt = DateTime("2012/12/2 12:12:12.232")
         dt = DateTime(datetime.now())
         """
         if isinstance(date_time, datetime):
             self.__date_time = date_time
-        elif isinstance(date_time, (str, unicode)):
-            try:
-                date_time = parser.parse(str, parserinfo, **kwargs)
-                self.__date_time = date_time.date()
-            except ValueError:
-                # parse failed
-                self.__date_time = datetime.min
-        elif isinstance(date_time, (int, float, long)):
-            pass
 
 
     def set_datetime(self, date_time):
@@ -130,19 +132,12 @@ class DateTime(object):
 
 
     @staticmethod
-    def current_milliseconds():
+    def from_microseconds(microseconds, epoch=tz.EPOCH):
         """
-        Get current milliseconds
+        通过微秒microseconds创建DateTime对象
         """
-        return long(round(time.time() * 1000))
-
-    @staticmethod
-    def from_timestamp_us(timestamp_us, epoch=tz.EPOCH):
-        """
-        通过微秒timestamp_us创建DateTime对象
-        """
-        if isinstance(timestamp_us, (int, float, long)):
-            return DateTime(epoch + timedelta(milliseconds=timestamp_us))
+        if isinstance(microseconds, (int, float, long)):
+            return DateTime(epoch + timedelta(microseconds=microseconds))
         else:
             raise ValueError
 

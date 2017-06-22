@@ -1,0 +1,25 @@
+{
+  "name": "pyblog",
+  "version": "1.0.0",
+  "description": "--- typora-root-url: ./ ---",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/telesoho/pyblog.git"
+  },
+  "keywords": [
+    "pyblog"
+  ],
+  "author": "telesoho",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/telesoho/pyblog/issues"
+  },
+  "homepage": "https://github.com/telesoho/pyblog#readme"
+}

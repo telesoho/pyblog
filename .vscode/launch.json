@@ -2,15 +2,32 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python",
+            "type": "python",
+            "request": "launch",
+            "stopOnEntry": false,
+            "console": "integratedTerminal",
+            "pythonPath": "${config:python.pythonPath}",
+            "program": "${file}",
+            "cwd": "${workspaceRoot}",
+            "env": {"PYTHONPATH":"${workspaceRoot}"},
+            "envFile": "${workspaceRoot}/.env",
+            "debugOptions": [
+                "WaitOnAbnormalExit",
+                "WaitOnNormalExit",
+                "RedirectOutput"
+            ]
+        },
+        {
             "name": "Integrated Terminal/Console",
             "type": "python",
             "request": "launch",
             "stopOnEntry": false,
             "pythonPath": "${config:python.pythonPath}",
-            "program": "${workspaceRoot}/app.py",
+            "program": "${workspaceRoot}/main.py",
             "cwd": "${workspaceRoot}",
             "console": "integratedTerminal",
-            "env": { "PYBLOG_ENV" : "development_settings.py" },
+            "env": {},
             "envFile": "${workspaceRoot}/.env",
             "debugOptions": [
                 "WaitOnAbnormalExit",

@@ -80,6 +80,13 @@ class DateTime(object):
     """
     __date_time = datetime.min
 
+    def __init__(self, date_time=datetime.min):
+        """
+        dt = DateTime(datetime.now())
+        """
+        assert isinstance(date_time, datetime)
+        self.__date_time = date_time
+
     @staticmethod
     def utc(date_time):
         """
@@ -116,12 +123,6 @@ class DateTime(object):
         """
         return self.timestamp(epoch) * 1000000
 
-    def __init__(self, date_time=datetime.min):
-        """
-        dt = DateTime(datetime.now())
-        """
-        if isinstance(date_time, datetime):
-            self.__date_time = date_time
 
 
     def set_datetime(self, date_time):

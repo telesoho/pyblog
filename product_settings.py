@@ -5,3 +5,4 @@
 
 DEBUG = False
 TESTING = False
+DATABASE = "{WorkspaceRoot}/data/pyblog_prd.sqlite3"

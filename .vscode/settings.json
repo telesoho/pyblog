@@ -8,5 +8,6 @@
         "-p",
         "*_test.py"
     ],
-    "python.unitTest.unittestEnabled": true
+    "python.unitTest.unittestEnabled": true,
+    "pasteImage.path": "${workspaceRoot}/static/images/"
 }
